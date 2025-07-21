@@ -1,0 +1,15 @@
+{
+    "name": "Metaverse NFT #305",
+    "description": "A unique Metaverse asset representing creativity.",
+    "image": "https://rakshit-singh2.github.io/sample-images/image-305.jpg",
+    "attributes": [
+        {
+            "trait_type": "Theme",
+            "value": "Dynamic"
+        },
+        {
+            "trait_type": "ID",
+            "value": 305
+        }
+    ]
+}
