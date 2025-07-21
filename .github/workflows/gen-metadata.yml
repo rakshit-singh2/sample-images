@@ -1,0 +1,40 @@
+name: Rename and Validate Uploads
+
+on:
+  push:
+    paths:
+      - '*.jpg'
+      - '*.jpeg'
+      - '*.png'
+      - '*.svg'
+
+jobs:
+  process-images:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Rename images to image-N.jpg & filter non-JPGs
+        run: |
+          mkdir -p renamed
+          count=1
+          for file in *.jpg *.jpeg; do
+            [ -e "$file" ] || continue
+            cp "$file" "renamed/image-${count}.jpg"
+            count=$((count + 1))
+          done
+
+          # Delete old images (optional)
+          rm -f *.jpg *.jpeg *.png *.svg
+
+          # Move renamed ones back
+          mv renamed/* .
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add *.jpg
+          git commit -m "🧹 Auto-renamed uploaded images"
+          git push
